@@ -9,6 +9,7 @@ phases:
   build:
     commands:
       - sed -i "s/backend_django_api/"$DJANGO_api"/" src/environments/environment.prod.ts 
+      - cat src/environments/environment.prod.ts 
       - echo Building the Docker image
       - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
       - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG 421320058418.dkr.ecr.us-east-1.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
