@@ -1,0 +1,20 @@
+version: 0.2
+ 
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 421320058418.dkr.ecr.us-east-1.amazonaws.com
+      
+  build:
+    commands:
+      - sed -i "s/backend_django_api/"$DJANGO_api"/" src/environments/environment.prod.ts 
+      - echo Building the Docker image
+      - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG 421320058418.dkr.ecr.us-east-1.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      
+  post_build:
+    commands:
+      - echo Pushing the Docker image
+      - docker push 421320058418.dkr.ecr.us-east-1.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      
