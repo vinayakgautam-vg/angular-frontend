@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  api_url: 'http://44.197.246.220:8000/api'
+  api_url: 'https://vinayakwp.squareops.co.in/api'
 };
